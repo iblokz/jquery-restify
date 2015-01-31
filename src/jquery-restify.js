@@ -29,6 +29,9 @@ $(document).ready(function(){
 	})
 
 	$('form.restify').submit(function(event){
+
+		var data = new FormData($(this)[0]);
+		/*
 		var map = $.map($(this).serializeArray(),function(v) { var n = {}; n[v.name] = v.value; return n;});
 		
 		var data = {};
@@ -38,6 +41,7 @@ $(document).ready(function(){
 				data[key] = formEl[key];
 			}
 		});
+		*/
 		var success = $(this).attr('success').split(',');
 		var method = $(this).attr('method');
 		var url = $(this).attr('action');
@@ -46,7 +50,11 @@ $(document).ready(function(){
 			url: url,
 			type: method.toUpperCase(),
 			data: data,
-    		dataType: 'json',
+			async: false,
+			cache: false,
+			contentType: false,
+			processData: false,
+			dataType: 'json',
 			success: function(result) {
 				if(success[0] && success[0]=='callback' && success[1]){
 					var successFunc = functionFromStr(success[1]);
